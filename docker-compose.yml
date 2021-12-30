@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+
+    web:
+        build: 
+            context: ${PWD}/web
+            dockerfile: dockerfile
+        image: backend:dev
+        # stdin_open: true # docker run -i
+        # tty: true        # docker run -t
+        # entrypoint: /bin/sh
+        env_file: ${PWD}/.env
+        restart: unless-stopped
+        volumes:
+            - ${PWD}/web:/data
+            - /data/node_modules
+        ports:
+            - "3001:3001"
+        environment:
+            - TZ=America/Chicago
