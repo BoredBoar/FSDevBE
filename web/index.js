@@ -1,5 +1,6 @@
 import express from 'express'
 import morgan from 'morgan'
+import cors from 'cors'
 const app = express()
 const max = 9999999
 
@@ -33,6 +34,7 @@ morgan.token('entry', (req) => {
   return ''
 })
 
+app.use(cors())
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :entry'))
 
@@ -90,7 +92,7 @@ app.get('/api/persons', (request, response) => {
     response.json({...person, id:newID})
   })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

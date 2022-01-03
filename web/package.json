@@ -1,5 +1,5 @@
 {
-  "type":"module",
+  "type": "module",
   "name": "backend",
   "version": "0.0.1",
   "description": "Full Stack Dev Open backend (part3)",
@@ -13,6 +13,7 @@
     "content-type": "^1.0.4",
     "cookie": "^0.4.1",
     "cookie-signature": "^1.0.6",
+    "cors": "^2.8.5",
     "debug": "^2.6.9",
     "depd": "^1.1.2",
     "destroy": "^1.0.4",
@@ -49,6 +50,7 @@
     "send": "^0.17.2",
     "serve-static": "^1.14.2",
     "setprototypeof": "^1.2.0",
+    "side-channel": "^1.0.4",
     "statuses": "^1.5.0",
     "toidentifier": "^1.0.1",
     "type-is": "^1.6.18",
