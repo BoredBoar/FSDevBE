@@ -26,8 +26,15 @@ let persons = [
     }
 ]
 
+morgan.token('entry', (req) => {
+  if(Object.keys(req.body).length > 0){
+    return JSON.stringify(req.body)
+  }
+  return ''
+})
+
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :entry'))
 
 
 app.get('/', (request, response) => {
