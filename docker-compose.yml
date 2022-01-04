@@ -10,7 +10,6 @@ services:
         # stdin_open: true # docker run -i
         # tty: true        # docker run -t
         # entrypoint: /bin/sh
-        env_file: ${PWD}/.env
         restart: unless-stopped
         volumes:
             - ${PWD}/web:/data
