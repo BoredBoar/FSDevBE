@@ -48,32 +48,26 @@ app.get('/api/persons', (request, response) => {
   })
 
   app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    var exists = persons.find(person => person.id === id)
-    if(exists) {
-        persons = persons.filter(person => person.id !== id)
-        response.status(204).end()
-    }
-    response.statusMessage = `Person with ID of ${request.params.id} was not found`
-    response.status(404).end()
+    Person.findByIdAndRemove(request.params.id)
+      .then(result => {
+        if(result) {
+          response.status(204).end()
+        } else {
+          response.statusMessage = `Person with ID of ${request.params.id} was not found`
+          response.status(404).end()
+        }
+      })
   })
 
   app.post('/api/persons', (request, response) => {
-    const person = request.body
-    var newID = Math.floor(Math.random() * 9999999);
-    while(persons.find(person => person.id === newID)) {
-        newID = Math.floor(Math.random() * max);
-    }
-    if (!person.name || !person.number) {
-        response.status(406).json({error: `Person must contain BOTH a name and a number`})
-        return
-    }
-    if (persons.find(x => x.name.toLowerCase() === person.name.toLowerCase())) {
-        response.status(406).json({error: `${person.name} already exists in the phonebook!`})
-        return
-    } 
-    persons = persons.concat({...person,id:newID})
-    response.json({...person, id:newID})
+    const person = new Person({
+      name: request.body.name,
+      number: request.body.number
+    })
+    person.save().then(result => {
+      console.log('added', `${result.name} number ${result.number}`, 'to phonebook')
+      response.json(result)
+  })
   })
 
 const PORT = process.env.PORT || 3001
