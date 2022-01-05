@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import uniqueValidator from 'mongoose-unique-validator'
 
 if (process.argv.length < 3) {
   console.log('Please provide a password as an argument: node mongo.js <password>')
@@ -16,9 +17,20 @@ const url =
 mongoose.connect(url)
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String
+  name: {
+      type: String,
+      minLength: 3,
+      required: true,
+      unique: true
+  },
+  number: {
+      type: String,
+      minlength: 8,
+      required: true
+  }
 })
+
+personSchema.plugin(uniqueValidator);
 
 const Person = mongoose.model('Person', personSchema)
 
